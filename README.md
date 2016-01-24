@@ -1,10 +1,14 @@
 # ltepi-setup
 LTEPiボードを利用するためのソフトウェアです。
 
-# LTEPiとは
+# LTEPiって何？
 RaspberryPi B+やRaspberryPi 2 Model Bに取り付けが可能なLTE通信モジュールを搭載した基板です。
 
 ![LTEPi on RPiB+](http://lte4iot.com/wp-content/uploads/2015/05/LTEPi01.png)
+
+# 対応ハードウェア
+1. Raspberry Pi B+
+1. Raspberry Pi2 Model B
 
 # 対応OS
 Raspbian
