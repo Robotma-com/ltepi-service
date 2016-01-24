@@ -53,11 +53,10 @@ function install_cli {
 }
 
 function install_ltepi {
-  if [ -d "ltepi-${LTEPI_VERSION}" ]; then
-    return
   info "Installing LTEPi Python Library..."
+  if [ ! -d "ltepi-${LTEPI_VERSION}" ]; then
+    curl -L https://github.com/${LTEPI_GITHUB_ID}/archive/${LTEPI_VERSION}.tar.gz | tar zx
   fi
-  curl -L https://github.com/${LTEPI_GITHUB_ID}/archive/${LTEPI_VERSION}.tar.gz | tar zx
   cd ltepi-${LTEPI_VERSION}
   ./install.sh /opt/inn-farm/ltepi/bin
   cd ../
