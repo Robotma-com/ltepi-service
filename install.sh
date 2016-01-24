@@ -8,10 +8,21 @@ SERVICE_HOME=${INNFARM_HOME}/ltepi/
 GITHUB_ID=Robotma-com/ltepi-setup
 SRC_DIR="${SRC_DIR:-/tmp/ltepi-setup-${VERSION}}"
 
+function err {
+  echo -e "\033[91m[ERROR] $1\033[0m"
+}
+
 function assert_root {
   if [[ $EUID -ne 0 ]]; then
      echo "This script must be run as root" 
      exit 1
+  fi
+}
+
+function abort_if_installed {
+  if [ -f "${SERVICE_HOME}/bin/version.txt" ]; then
+    err "Already installed"
+    exit 1
   fi
 }
 
@@ -42,5 +53,6 @@ if [ "$1" == "pack" ]; then
 fi
 
 assert_root
+abort_if_installed
 download
 setup
