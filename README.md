@@ -29,6 +29,10 @@ $ curl https://raw.githubusercontent.com/Robotma-com/ltepi-setup/master/setup | 
 # モジュールリリース時の注意
 1. [`setup`](setup)内の`VERSION=`にあるバージョンを修正してコミットする
 1. 履歴を追記、修正してコミットする
+1. （もし必要があれば）パッケージング
+```
+$ ./install.sh pack
+```
 
 # 履歴
 * 1.0.1

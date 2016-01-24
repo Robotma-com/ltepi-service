@@ -30,6 +30,17 @@ function setup {
   ./setup
 }
 
+function package {
+  rm -f ltepi-${VERSION}.tgz
+  # http://unix.stackexchange.com/a/9865
+  COPYFILE_DISABLE=1 tar --exclude="./.*" -zcf ltepi-setup-${VERSION}.tgz *
+}
+
+if [ "$1" == "pack" ]; then
+  package
+  exit 0
+fi
+
 assert_root
 download
 setup
