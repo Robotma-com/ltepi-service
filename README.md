@@ -30,6 +30,7 @@ $ curl https://raw.githubusercontent.com/Robotma-com/ltepi-setup/master/setup | 
 * 1.0.1
   - GitHub公開
   - リモートインストーラーを追加
+  - アンインストーラーを追加
   - バージョンファイルをsetupから生成するように変更
   - 1.0.0と実行コードは同一となっており、特に違いはありません
 
