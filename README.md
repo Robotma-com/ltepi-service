@@ -1,2 +1,2 @@
 # ltepi-setup
-LTE Pi Setup Scripts
+LTEPi Setup Scripts
