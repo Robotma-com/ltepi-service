@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# PS HOLD
+echo  "20"  > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio20/direction
+
+# RI
+echo  "16"  > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio16/direction
+
+# AREA_IND
+echo  "6"  > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio6/direction
+
+# EMG_RI
+echo  "13"  > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio13/direction
+
+# VBUS
+echo 5 > /sys/class/gpio/export
+echo "out" > /sys/class/gpio/gpio5/direction
+
+# POWER
+echo 12 > /sys/class/gpio/export
+echo "out" > /sys/class/gpio/gpio12/direction
+
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+install -o root -g root -D -m 755 bin/get_iccid /opt/inn-farm/ltepi/bin/get_iccid
+install -o root -g root -D -m 755 bin/power_off /opt/inn-farm/ltepi/bin/power_off
+install -o root -g root -D -m 755 bin/power_on /opt/inn-farm/ltepi/bin/power_on
+install -o root -g root -D -m 755 bin/vbus_off /opt/inn-farm/ltepi/bin/vbus_off
+install -o root -g root -D -m 755 bin/vbus_on /opt/inn-farm/ltepi/bin/vbus_on
+install -o root -g root -D -m 755 bin/gpio_init /opt/inn-farm/ltepi/bin/gpio_init
+install -o root -g root -D -m 644 bin/version.txt /opt/inn-farm/ltepi/bin/version.txt
+
+mv /etc/network/interfaces /etc/network/interfaces.bak
+install -o root -g root -D -m 644 etc/network/interfaces /etc/network/interfaces
+mv /etc/rc.local /etc/rc.local.bak
+install -o root -g root -D -m 755 etc/rc.local /etc/rc.local
+
+tar zxf ltepi-0.9.4.tar.gz
+cd ltepi-0.9.4
+python ./setup.py install
+cd ../
+rm -rf ltepi-0.9.4
