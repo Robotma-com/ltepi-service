@@ -11,6 +11,8 @@ function assert_root {
 }
 
 function uninstall {
+  ltepi_disconnect
+  ltepi_off
   rm -f /etc/network/interfaces.d/ltepi.conf
 
   for p in $(ls /usr/bin/ltepi*); do
