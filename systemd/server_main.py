@@ -24,7 +24,7 @@ class Monitor(threading.Thread):
         ls_nic = subprocess.Popen(ls_nic_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
         for nic in ls_nic.split("\n"):
           if nic:
-            ip_cmd = "ip route | grep %s | awk '/default/ { print $3 }" % nic
+            ip_cmd = "ip route | grep %s | awk '/default/ { print $3 }'" % nic
             ip = subprocess.Popen(ip_cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
             subprocess.call("ip route del default via %s" % ip, shell=True)
       time.sleep(5)
