@@ -5,7 +5,10 @@ import json
 import os
 
 prefix = os.path.dirname(__file__)
-with open(prefix + '/apn.json') as apn_creds:
+apn_json = prefix + '/apn.json'
+if not os.path.isfile(apn_json):
+	apn_json = '/opt/inn-farm/ltepi/bin/apn.json'
+with open(apn_json) as apn_creds:
   apn = json.load(apn_creds)
 ret = ltepi.reqConnect(apn['apn'], apn['user'], apn['password'])
 print(ret)
