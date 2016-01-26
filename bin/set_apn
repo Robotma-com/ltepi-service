@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+function save_apn {
+  if [ "$#" != 3 ]; then
+    echo "./set_apn <APN> <USER> <PASSWORD>"
+    exit 1
+  fi
+  APN=$1
+  USER=$2
+  PASSWORD=$3
+  APN_JSON=$(dirname $0)/apn.json
+  echo "{\"apn\":\"${APN}\",\"user\":\"${USER}\",\"password\":\"${PASSWORD}\"}" > ${APN_JSON}
+}
+
+save_apn $1 $2 $3
+echo "OK"
