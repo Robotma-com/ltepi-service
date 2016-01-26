@@ -1,6 +1,9 @@
 #!/bin/bash
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
+VENDOR_HOME=/opt/inn-farm
+PROJECT_HOME=${VENDOR_HOME}/ltepi
+BIN_PATH=${PROJECT_HOME}/bin
 
 function err {
   echo -e "\033[91m[ERROR] $1\033[0m"
@@ -58,7 +61,7 @@ function install_ltepi {
     curl -L https://github.com/${LTEPI_GITHUB_ID}/archive/${LTEPI_VERSION}.tar.gz | tar zx
   fi
   cd ltepi-${LTEPI_VERSION}
-  ./install.sh /opt/inn-farm/ltepi/bin
+  ./install.sh ${BIN_PATH}
   cd ../
   rm -rf ltepi-${LTEPI_VERSION}
 }
