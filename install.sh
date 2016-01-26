@@ -63,9 +63,9 @@ function install_cli {
   download
   info "Installing command lines to ${BIN_PATH}..."
   for f in $(ls ./bin); do
-    install -o root -g root -D -m 755 bin/${f} ${BIN_PATH}/${f}
+    install -o root -g root -D -m 755 ${SRC_DIR}/bin/${f} ${BIN_PATH}/${f}
   done
-  install -o root -g root -D -m 755 uninstall.sh ${BIN_PATH}/uninstall.sh
+  install -o root -g root -D -m 755 ${SRC_DIR}/uninstall.sh ${BIN_PATH}/uninstall.sh
   
   for p in $(ls ./bin/ltepi_*); do
     f=$(basename ${p})
@@ -74,8 +74,8 @@ function install_cli {
 
   info "Installing config files to ${BIN_PATH}..."
   echo "${VERSION}" > ./bin/version.txt
-  install -o root -g root -D -m 644 bin/version.txt ${BIN_PATH}/version.txt
-  install -o root -g root -D -m 644 apn.json ${BIN_PATH}/apn.json
+  install -o root -g root -D -m 644 ${SRC_DIR}/bin/version.txt ${BIN_PATH}/version.txt
+  install -o root -g root -D -m 644 ${SRC_DIR}/apn.json ${BIN_PATH}/apn.json
   REBOOT=1
 }
 
