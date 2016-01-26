@@ -6,6 +6,7 @@ SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
 VERSION=2.0.0
 
+LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
 
 SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
