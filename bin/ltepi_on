@@ -33,15 +33,17 @@ function exit_if_already_on {
 }
 
 function modem_on {
+  set +e
   ./vbus_on > /dev/null 2>&1
   ./power_on > /dev/null 2>&1
   while true; do
-     ifconfig -a | grep usb0 > /dev/null 2>&1
-     if [ "$?" == "0" ]; then
-       break
-     fi
-     sleep 1
+    ifconfig usb0 > /dev/null 2>&1
+    if [ "$?" == "0" ]; then
+     break
+    fi
+    sleep 1
   done
+  set -e
 }
 
 assert_root
