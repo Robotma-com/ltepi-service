@@ -39,10 +39,11 @@ function modem_off {
      sleep 1
   done
   ./vbus_off > /dev/null 2>&1
+  ./gpio_fini > /dev/null 2>&1
 }
 
 assert_root
-exit_if_already_off
 cd_module_root
+exit_if_already_off
 modem_off
 echo "OK"
