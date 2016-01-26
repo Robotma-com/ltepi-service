@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -e
+
+function assert_root {
+  if [[ $EUID -ne 0 ]]; then
+     echo "This script must be run as root" 
+     exit 1
+  fi
+}
+
+function cd_module_root {
+  RET=`which realpath`
+  RET=$?
+  if [ "${RET}" == "0" ]; then
+    REALPATH=`realpath "$0"`
+  else
+    REALPATH=`readlink -f -- "$0"`
+  fi
+  ROOT=`dirname ${REALPATH}`
+  pushd ${ROOT}
+}
+
+function exit_if_already_on {
+  RET=$(cat /sys/class/gpio/gpio20/value)
+  if [ "${RET}" != "0" ]; then
+    echo "OK (already ON)"
+    exit 0
+  fi
+}
+
+function modem_on {
+  ./vbus_on > /dev/null 2>&1
+  ./power_on > /dev/null 2>&1
+  while 1; do
+     ifconfig -a | grep usb0
+     if [ "$?" == "0" ]; then
+       break
+     fi
+     sleep 1
+  done
+}
+
+assert_root
+exit_if_already_on
+cd_module_root
+modem_on
+echo "OK"
