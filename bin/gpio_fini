@@ -7,7 +7,7 @@ function assert_root {
   fi
 }
 
-function finalizePorts {
+function finalize_ports {
   # PS HOLD: 20
   # RI: 16
   # AREA_IND: 6
@@ -20,4 +20,4 @@ function finalizePorts {
 }
 
 assert_root
-finalizePorts
+finalize_ports

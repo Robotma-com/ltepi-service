@@ -7,7 +7,7 @@ function assert_root {
   fi
 }
 
-function setupPorts {
+function setup_ports {
   # PS HOLD: 20
   # RI: 16
   # AREA_IND: 6
@@ -19,7 +19,7 @@ function setupPorts {
   done
 }
 
-function setupPinDirections {
+function setup_pin_directions {
   echo "in" > /sys/class/gpio/gpio20/direction
   echo "in" > /sys/class/gpio/gpio16/direction
   echo "in" > /sys/class/gpio/gpio6/direction
@@ -29,5 +29,5 @@ function setupPinDirections {
 }
 
 assert_root
-setupPorts
-setupPinDirections
+setup_ports
+setup_pin_directions
