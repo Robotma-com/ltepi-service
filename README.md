@@ -11,7 +11,7 @@ RaspberryPi B+やRaspberryPi 2 Model Bに取り付けが可能なLTE通信モジ
 1. Raspberry Pi2 Model B
 
 # 対応OS
-Raspbian
+Raspbian 4.1以降
 
 # インストール方法
 Raspberry Piをインターネットに接続できる状態にして、以下のコマンドを入力してください。[ltepi](https://github.com/Robotma-com/ltepi)も同時にインストールされます。
