@@ -3,7 +3,7 @@
 VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
-SERVICE_HOME=${VENDOR_HOME}/ltepi/
+SERVICE_HOME=${VENDOR_HOME}/ltepi
 BIN_PATH=${SERVICE_HOME}/bin
 
 REBOOT=0
@@ -43,8 +43,8 @@ function uninstall_service {
   RET=$?
   if [ "${RET}" == "0" ]; then
     systemctl stop ${SERVICE_NAME}
-    systemctl disable ${SERVICE_NAME}
   fi
+  systemctl disable ${SERVICE_NAME}
 
   LIB_SYSTEMD="$(dirname $(dirname $(which systemctl)))/lib/systemd"
   rm -f ${LIB_SYSTEMD}/system/${SERVICE_NAME}.service
@@ -68,3 +68,4 @@ function teardown {
 assert_root
 uninstall_service
 uninstall_cli
+teardown

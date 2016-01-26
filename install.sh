@@ -4,12 +4,12 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=2.0.0
+VERSION=2.0.0-beta2
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
 
-SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
+SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}
 SRC_DIR="${SRC_DIR:-/tmp/ltepi-service-${VERSION}}"
 BIN_PATH=${SERVICE_HOME}/bin
 
