@@ -56,13 +56,15 @@ function wait_for_usb0_conn_established {
   done
 }
 
-function del_eth0_default_gw {
-  IP=$(ip route | grep eth0 | awk '/default/ { print $3 }')
-  ip route del default via ${IP}
+function del_non_usb0_default_gw {
+  for NIC in $(ip route  | grep default | grep -v usb0 | tr -s ' ' | cut -d ' ' -f 5); do
+    IP=$(ip route | grep ${NIC} | awk '/default/ { print $3 }')
+    ip route del default via ${IP}
+  done
 }
 
 assert_root
 connect
 wait_for_usb0_conn_established
-del_eth0_default_gw
+del_non_usb0_default_gw
 echo "OK"
