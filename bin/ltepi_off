@@ -22,6 +22,10 @@ function cd_module_root {
 }
 
 function exit_if_already_off {
+  if [ ! -f "/sys/class/gpio/gpio20/value" ]; then
+    echo "OK (already OFF)"
+    exit 0
+  fi
   RET=$(cat /sys/class/gpio/gpio20/value)
   if [ "${RET}" == "0" ]; then
     echo "OK (already OFF)"
