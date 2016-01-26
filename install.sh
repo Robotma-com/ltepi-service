@@ -73,7 +73,7 @@ function install_cli {
   done
 
   info "Installing config files to ${BIN_PATH}..."
-  echo "${VERSION}" > ./bin/version.txt
+  echo "${VERSION}" > ${SRC_DIR}/bin/version.txt
   install -o root -g root -D -m 644 ${SRC_DIR}/bin/version.txt ${BIN_PATH}/version.txt
   install -o root -g root -D -m 644 ${SRC_DIR}/apn.json ${BIN_PATH}/apn.json
   REBOOT=1
@@ -85,10 +85,9 @@ function install_ltepi {
   if [ ! -d "ltepi-${LTEPI_VERSION}" ]; then
     curl -L https://github.com/${LTEPI_GITHUB_ID}/archive/${LTEPI_VERSION}.tar.gz | tar zx
   fi
-  cd ltepi-${LTEPI_VERSION}
+  cd ${SRC_DIR}/ltepi-${LTEPI_VERSION}
   ./install.sh ${BIN_PATH}
-  cd ../
-  [ "${DEBUG}" ] || rm -rf ltepi-${LTEPI_VERSION}
+  [ "${DEBUG}" ] || rm -rf ${SRC_DIR}/ltepi-${LTEPI_VERSION}
   REBOOT=1
 }
 
