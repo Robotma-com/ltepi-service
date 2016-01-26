@@ -1,18 +1,68 @@
-#!/usr/bin/env python
+#!/usr/bin/env bash
 
+function assert_root {
+  if [[ $EUID -ne 0 ]]; then
+     echo "This script must be run as root" 
+     exit 1
+  fi
+}
+
+function connect {
+  set -e
+  python - <<EOF
 import ltepi
 import json
 import os
+import time
 
 prefix = os.path.dirname(__file__)
 apn_json = prefix + '/apn.json'
 if not os.path.isfile(apn_json):
-	apn_json = '/opt/inn-farm/ltepi/bin/apn.json'
+  apn_json = '/opt/inn-farm/ltepi/bin/apn.json'
 with open(apn_json) as apn_creds:
   apn = json.load(apn_creds)
-ret = ltepi.reqConnect(apn['apn'], apn['user'], apn['password'])
-print(ret)
+
+count = 0
+while True:
+  ret = ltepi.reqConnect(apn['apn'], apn['user'], apn['password'])
+  count += 1
+  if ret == 'OK':
+    break
+  elif count >= 31:
+    break
+  time.sleep(1)
+
 if ret == 'OK':
   exit(0)
 else:
+  print(ret)
   exit(1)
+EOF
+  set +e
+}
+
+function wait_for_usb0_conn_established {
+  CNT=0
+  while true; do
+    let CNT++
+    RET=$(ip route | grep -c usb0)
+    if [ "${RET}" == "2" ]; then
+      break
+    elif [ "${CNT}" -gt "61" ]; then
+      echo "NOT OK (usb0 connection timeout)"
+      exit 1
+    fi
+    sleep 1
+  done
+}
+
+function del_eth0_default_gw {
+  IP=$(ip route | grep eth0 | awk '/default/ { print $3 }')
+  ip route del default via ${IP}
+}
+
+assert_root
+connect
+wait_for_usb0_conn_established
+del_eth0_default_gw
+echo "OK"
