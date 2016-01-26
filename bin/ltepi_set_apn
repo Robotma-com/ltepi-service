@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+VENDOR_HOME=/opt/inn-farm
+SERVICE_NAME=ltepi
+SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
+BIN_PATH=${SERVICE_HOME}/bin
+
+function save_apn {
+  if [ "$#" != 3 ]; then
+    echo "ltepi_set_apn <APN> <USER> <PASSWORD>"
+    exit 1
+  fi
+  cd ${BIN_PATH}
+  APN=$1
+  USER=$2
+  PASSWORD=$3
+  APN_JSON=$(dirname $0)/apn.json
+  echo "{\"apn\":\"${APN}\",\"user\":\"${USER}\",\"password\":\"${PASSWORD}\"}" > ${APN_JSON}
+}
+
+save_apn $1 $2 $3
+echo "OK"

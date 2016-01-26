@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+echo -e "\033[93m[WARN] *** INTERNAL USE, DO NOT RUN DIRECTLY *** \033[0m"
+
+set -e
+
+function assert_root {
+  if [[ $EUID -ne 0 ]]; then
+     echo "This script must be run as root" 
+     exit 1
+  fi
+}
+
+function power_off {
+  echo 0 > /sys/class/gpio/gpio12/value
+  echo 1 > /sys/class/gpio/gpio12/value
+  sleep 3 
+  echo 0 > /sys/class/gpio/gpio12/value
+}
+
+assert_root
+power_off
+echo "OK"

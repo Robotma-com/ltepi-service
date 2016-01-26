@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+echo -e "\033[93m[WARN] *** INTERNAL USE, DO NOT RUN DIRECTLY *** \033[0m"
+
+set -e
+
+function assert_root {
+  if [[ $EUID -ne 0 ]]; then
+     echo "This script must be run as root" 
+     exit 1
+  fi
+}
+
+function finalize_ports {
+  # PS HOLD: 20
+  # RI: 16
+  # AREA_IND: 6
+  # EMG_RI: 13
+  # VBUS: 5
+  # POWER: 12
+  for p in 20 16 6 13 5 12; do
+    [[ -f "/sys/class/gpio/gpio${p}/direction" ]] && echo  "${p}"  > /sys/class/gpio/unexport
+  done
+}
+
+assert_root
+finalize_ports
+echo "OK"

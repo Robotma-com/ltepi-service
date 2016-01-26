@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+import ltepi
+
+ret = ltepi.reqDisconnect()
+print(ret)
+if ret == 'OK':
+  exit(0)
+else:
+  exit(1)
