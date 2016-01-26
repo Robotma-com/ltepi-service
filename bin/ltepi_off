@@ -30,16 +30,18 @@ function exit_if_already_off {
 }
 
 function modem_off {
+  set +e
   ./power_off > /dev/null 2>&1
   while true; do
-     ifconfig -a | grep usb0 > /dev/null 2>&1
-     if [ "$?" != "0" ]; then
-       break
-     fi
-     sleep 1
+    ifconfig -a usb0 > /dev/null 2>&1
+    if [ "$?" != "0" ]; then
+     break
+    fi
+    sleep 1
   done
   ./vbus_off > /dev/null 2>&1
   ./gpio_fini > /dev/null 2>&1
+  set -e
 }
 
 assert_root
