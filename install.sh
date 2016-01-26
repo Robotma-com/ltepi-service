@@ -4,8 +4,9 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=1.0.1
+VERSION=2.0.0
 
+LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
 
 SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
@@ -62,9 +63,9 @@ function install_cli {
   download
   info "Installing command lines to ${BIN_PATH}..."
   for f in $(ls ./bin); do
-    install -o root -g root -D -m 755 bin/${f} ${BIN_PATH}/${f}
+    install -o root -g root -D -m 755 ${SRC_DIR}/bin/${f} ${BIN_PATH}/${f}
   done
-  install -o root -g root -D -m 755 uninstall.sh ${BIN_PATH}/uninstall.sh
+  install -o root -g root -D -m 755 ${SRC_DIR}/uninstall.sh ${BIN_PATH}/uninstall.sh
   
   for p in $(ls ./bin/ltepi_*); do
     f=$(basename ${p})
@@ -73,8 +74,8 @@ function install_cli {
 
   info "Installing config files to ${BIN_PATH}..."
   echo "${VERSION}" > ./bin/version.txt
-  install -o root -g root -D -m 644 bin/version.txt ${BIN_PATH}/version.txt
-  install -o root -g root -D -m 644 apn.json ${BIN_PATH}/apn.json
+  install -o root -g root -D -m 644 ${SRC_DIR}/bin/version.txt ${BIN_PATH}/version.txt
+  install -o root -g root -D -m 644 ${SRC_DIR}/apn.json ${BIN_PATH}/apn.json
   REBOOT=1
 }
 

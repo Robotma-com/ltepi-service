@@ -2,11 +2,17 @@
 
 set -e
 
+VENDOR_HOME=/opt/inn-farm
+SERVICE_NAME=ltepi
+SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
+BIN_PATH=${SERVICE_HOME}/bin
+
 function save_apn {
   if [ "$#" != 3 ]; then
-    echo "./set_apn <APN> <USER> <PASSWORD>"
+    echo "ltepi_set_apn <APN> <USER> <PASSWORD>"
     exit 1
   fi
+  cd ${BIN_PATH}
   APN=$1
   USER=$2
   PASSWORD=$3
