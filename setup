@@ -51,9 +51,6 @@ function install_cli {
   echo "${VERSION}" > ./bin/version.txt
   install -o root -g root -D -m 644 bin/version.txt ${BIN_PATH}/version.txt
   install -o root -g root -D -m 644 apn.json ${BIN_PATH}/apn.json
-
-  info "Configuring networks..."
-  install -o root -g root -D -m 644 etc/network/interfaces.d/ltepi.conf /etc/network/interfaces.d/ltepi.conf
 }
 
 function install_ltepi {
