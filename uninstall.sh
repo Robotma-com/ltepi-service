@@ -1,8 +1,23 @@
 #!/bin/bash
 
 VENDOR_HOME=/opt/inn-farm
+
 SERVICE_HOME=${VENDOR_HOME}/ltepi/
 BIN_PATH=${SERVICE_HOME}/bin
+
+REBOOT=0
+
+function err {
+  echo -e "\033[91m[ERROR] $1\033[0m"
+}
+
+function info {
+  echo -e "\033[92m[INFO] $1\033[0m"
+}
+
+function alert {
+  echo -e "\033[93m[ALERT] $1\033[0m"
+}
 
 function assert_root {
   if [[ $EUID -ne 0 ]]; then
@@ -11,21 +26,44 @@ function assert_root {
   fi
 }
 
-function uninstall {
-  ltepi_disconnect
-  ${BIN_PATH}/modem_off
-  rm -f /etc/network/interfaces.d/ltepi.conf
-
+function uninstall_cli {
   for p in $(ls /usr/bin/ltepi*); do
     rm -f ${p}
   done
 
-  cd ${SERVICE_HOME}/bin
-  ./ltepi-uninstall.sh ${SERVICE_HOME}/bin
-
-  rm -fr ${SERVICE_HOME}
-  [ "$(ls -A ${VENDOR_HOME})" ] || rmdir ${VENDOR_HOME}
+  cd ${BIN_PATH}
+  ./ltepi-uninstall.sh ${BIN_PATH}
+  rm -fr ${BIN_PATH}
+  REBOOT=1
 }
 
+function uninstall_service {
+  RET=`systemctl | grep ${SERVICE_NAME}.service`
+  RET=$?
+  if [ "${RET}" == "0" ]; then
+    systemctl stop ${SERVICE_NAME}
+    systemctl disable ${SERVICE_NAME}
+  fi
+
+  LIB_SYSTEMD="$(dirname $(dirname $(which systemctl)))/lib/systemd"
+  rm -f ${LIB_SYSTEMD}/system/${SERVICE_NAME}.service
+  rm -f ${SERVICE_HOME}/environment
+  rm -f ${SERVICE_HOME}/*.sh
+  rm -f ${SERVICE_HOME}/*.py
+  rm -f ${SERVICE_HOME}/*.pyc
+  info "${SERVICE_NAME} has been uninstalled"
+  REBOOT=1
+}
+
+function teardown {
+  [ "$(ls -A ${SERVICE_HOME})" ] || rmdir ${SERVICE_HOME}
+  [ "$(ls -A ${ROBOTMA_HOME})" ] || rmdir ${ROBOTMA_HOME}
+  if [ "${REBOOT}" == "1" ]; then
+    alert "*** Please reboot the system! (enter 'reboot') ***"
+  fi
+}
+
+# main
 assert_root
-uninstall
+uninstall_service
+uninstall_cli
