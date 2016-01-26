@@ -4,7 +4,7 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=2.0.0-beta5
+VERSION=2.0.0-beta6
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
@@ -82,12 +82,13 @@ function install_cli {
 function install_ltepi {
   download
   info "Installing LTEPi Python Library..."
-  if [ ! -d "ltepi-${LTEPI_VERSION}" ]; then
+  cd /tmp
+  if [ ! -d "/tmp/ltepi-${LTEPI_VERSION}" ]; then
     curl -L https://github.com/${LTEPI_GITHUB_ID}/archive/${LTEPI_VERSION}.tar.gz | tar zx
   fi
-  cd ${SRC_DIR}/ltepi-${LTEPI_VERSION}
+  cd /tmp/ltepi-${LTEPI_VERSION}
   ./install.sh ${BIN_PATH}
-  [ "${DEBUG}" ] || rm -rf ${SRC_DIR}/ltepi-${LTEPI_VERSION}
+  [ "${DEBUG}" ] || rm -rf /tmp/ltepi-${LTEPI_VERSION}
   REBOOT=1
 }
 
