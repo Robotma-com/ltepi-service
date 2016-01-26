@@ -42,7 +42,7 @@ function setup {
 }
 
 function package {
-  rm -f ltepi-${VERSION}.tgz
+  rm -f ltepi-setup-${VERSION}.tgz
   # http://unix.stackexchange.com/a/9865
   COPYFILE_DISABLE=1 tar --exclude="./.*" -zcf ltepi-setup-${VERSION}.tgz *
 }
