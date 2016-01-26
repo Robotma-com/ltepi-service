@@ -2,6 +2,7 @@
 
 VENDOR_HOME=/opt/inn-farm
 
+SERVICE_NAME=ltepi
 SERVICE_HOME=${VENDOR_HOME}/ltepi/
 BIN_PATH=${SERVICE_HOME}/bin
 
@@ -57,7 +58,7 @@ function uninstall_service {
 
 function teardown {
   [ "$(ls -A ${SERVICE_HOME})" ] || rmdir ${SERVICE_HOME}
-  [ "$(ls -A ${ROBOTMA_HOME})" ] || rmdir ${ROBOTMA_HOME}
+  [ "$(ls -A ${VENDOR_HOME})" ] || rmdir ${VENDOR_HOME}
   if [ "${REBOOT}" == "1" ]; then
     alert "*** Please reboot the system! (enter 'reboot') ***"
   fi
