@@ -1,15 +1,16 @@
 #!/bin/bash
 
-VENDOR_HOME=/opt/inn-farm/
+VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
-GITHUB_ID=Robotma-com/ltepi-setup
+GITHUB_ID=Robotma-com/ltepi-service
 VERSION=1.0.1
 
 LTEPI_VERSION=0.9.5
 
 SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}/
-SRC_DIR="${SRC_DIR:-/tmp/ltepi-setup-${VERSION}}"
+SRC_DIR="${SRC_DIR:-/tmp/ltepi-service-${VERSION}}"
+BIN_PATH=${SERVICE_HOME}/bin
 
 KERNEL="${KERNEL:-$(uname -r)}"
 CONTAINER_MODE=0
