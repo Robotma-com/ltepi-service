@@ -1,0 +1,17 @@
+[Unit]
+Description=LTEPi Board Service, version:%VERSION%
+After=wpa_supplicant.service
+Before=
+
+[Service]
+Type=simple
+RemainAfterExit=no
+Restart=on-failure
+ExecStart=/opt/inn-farm/ltepi/start_systemd.sh
+ExecStop=/opt/inn-farm/ltepi/stop_systemd.sh
+Environment="HOME=/opt/inn-farm/ltepi/"
+WorkingDirectory=/opt/inn-farm/ltepi/
+EnvironmentFile=/opt/inn-farm/ltepi/environment
+
+[Install]
+WantedBy=multi-user.target
