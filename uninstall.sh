@@ -11,10 +11,11 @@ function assert_root {
 }
 
 function uninstall {
-  rm -f /etc/network/interfaces
-  install -o root -g root -D -m 644 /etc/network/interfaces.bak /etc/network/interfaces && rm -f /etc/network/interfaces.bak
-  rm -f /etc/rc.local
-  install -o root -g root -D -m 755 /etc/rc.local.bak /etc/rc.local && rm -f /etc/rc.local.bak
+  rm -f /etc/network/interfaces.d/ltepi.conf
+
+  for p in $(ls /usr/bin/ltepi*); do
+    rm -f ${p}
+  done
 
   cd ${SERVICE_HOME}/bin
   ./ltepi-uninstall.sh ${SERVICE_HOME}/bin
