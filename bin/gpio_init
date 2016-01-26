@@ -1,27 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# PS HOLD
-echo  "20"  > /sys/class/gpio/export
-echo "in" > /sys/class/gpio/gpio20/direction
+function assert_root {
+  if [[ $EUID -ne 0 ]]; then
+     echo "This script must be run as root" 
+     exit 1
+  fi
+}
 
-# RI
-echo  "16"  > /sys/class/gpio/export
-echo "in" > /sys/class/gpio/gpio16/direction
+function setupPorts {
+  # PS HOLD: 20
+  # RI: 16
+  # AREA_IND: 6
+  # EMG_RI: 13
+  # VBUS: 5
+  # POWER: 12
+  for p in 20 16 6 13 5 12; do
+    [[ ! -f "/sys/class/gpio/gpio${p}/direction" ]] && echo  "${p}"  > /sys/class/gpio/export
+  done
+}
 
-# AREA_IND
-echo  "6"  > /sys/class/gpio/export
-echo "in" > /sys/class/gpio/gpio6/direction
+function setupPinDirections {
+  echo "in" > /sys/class/gpio/gpio20/direction
+  echo "in" > /sys/class/gpio/gpio16/direction
+  echo "in" > /sys/class/gpio/gpio6/direction
+  echo "in" > /sys/class/gpio/gpio13/direction
+  echo "out" > /sys/class/gpio/gpio5/direction
+  echo "out" > /sys/class/gpio/gpio12/direction
+}
 
-# EMG_RI
-echo  "13"  > /sys/class/gpio/export
-echo "in" > /sys/class/gpio/gpio13/direction
-
-# VBUS
-echo 5 > /sys/class/gpio/export
-echo "out" > /sys/class/gpio/gpio5/direction
-
-# POWER
-echo 12 > /sys/class/gpio/export
-echo "out" > /sys/class/gpio/gpio12/direction
-
-
+assert_root
+setupPorts
+setupPinDirections
