@@ -22,6 +22,9 @@ function cd_module_root {
 }
 
 function exit_if_already_on {
+  if [ ! -f "/sys/class/gpio/gpio20/value" ]; then
+    ./gpio_init > /dev/null 2>&1
+  fi
   RET=$(cat /sys/class/gpio/gpio20/value)
   if [ "${RET}" != "0" ]; then
     echo "OK (already ON)"
@@ -42,7 +45,7 @@ function modem_on {
 }
 
 assert_root
-exit_if_already_on
 cd_module_root
+exit_if_already_on
 modem_on
 echo "OK"
