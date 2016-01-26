@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import ltepi
+import json
+import os
+
+prefix = os.path.dirname(__file__)
+with open(prefix + '/apn.json') as apn_creds:
+  apn = json.load(apn_creds)
+ret = ltepi.reqConnect(apn['apn'], apn['user'], apn['password'])
+print(ret)
+if ret == 'OK':
+  exit(0)
+else:
+  exit(1)
