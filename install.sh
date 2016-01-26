@@ -62,12 +62,12 @@ function download {
 function install_cli {
   download
   info "Installing command lines to ${BIN_PATH}..."
-  for f in $(ls ./bin); do
+  for f in $(ls ${SRC_DIR}/bin); do
     install -o root -g root -D -m 755 ${SRC_DIR}/bin/${f} ${BIN_PATH}/${f}
   done
   install -o root -g root -D -m 755 ${SRC_DIR}/uninstall.sh ${BIN_PATH}/uninstall.sh
   
-  for p in $(ls ./bin/ltepi_*); do
+  for p in $(ls ${SRC_DIR}/bin/ltepi_*); do
     f=$(basename ${p})
     ln -sn ${BIN_PATH}/${f} /usr/bin/${f}
   done
