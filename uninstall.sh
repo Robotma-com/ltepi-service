@@ -1,7 +1,8 @@
 #!/bin/bash
 
-INNFARM_HOME=/opt/inn-farm/
-SERVICE_HOME=${INNFARM_HOME}/ltepi/
+VENDOR_HOME=/opt/inn-farm
+SERVICE_HOME=${VENDOR_HOME}/ltepi/
+BIN_PATH=${SERVICE_HOME}/bin
 
 function assert_root {
   if [[ $EUID -ne 0 ]]; then
@@ -23,7 +24,7 @@ function uninstall {
   ./ltepi-uninstall.sh ${SERVICE_HOME}/bin
 
   rm -fr ${SERVICE_HOME}
-  [ "$(ls -A ${INNFARM_HOME})" ] || rmdir ${INNFARM_HOME}
+  [ "$(ls -A ${VENDOR_HOME})" ] || rmdir ${VENDOR_HOME}
 }
 
 assert_root

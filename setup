@@ -2,8 +2,8 @@
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 VENDOR_HOME=/opt/inn-farm
-PROJECT_HOME=${VENDOR_HOME}/ltepi
-BIN_PATH=${PROJECT_HOME}/bin
+SERVICE_HOME=${VENDOR_HOME}/ltepi
+BIN_PATH=${SERVICE_HOME}/bin
 
 function err {
   echo -e "\033[91m[ERROR] $1\033[0m"
