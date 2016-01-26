@@ -37,22 +37,23 @@ function assert_vars {
 
 function install_cli {
   info "Installing command lines to /opt/inn-farm/ltepi/bin..."
-  install -o root -g root -D -m 755 bin/get_iccid /opt/inn-farm/ltepi/bin/get_iccid
-  install -o root -g root -D -m 755 bin/power_off /opt/inn-farm/ltepi/bin/power_off
-  install -o root -g root -D -m 755 bin/power_on /opt/inn-farm/ltepi/bin/power_on
-  install -o root -g root -D -m 755 bin/vbus_off /opt/inn-farm/ltepi/bin/vbus_off
-  install -o root -g root -D -m 755 bin/vbus_on /opt/inn-farm/ltepi/bin/vbus_on
-  install -o root -g root -D -m 755 bin/gpio_init /opt/inn-farm/ltepi/bin/gpio_init
+  for f in $(ls ./bin); do
+    install -o root -g root -D -m 755 bin/${f} ${BIN_PATH}/${f}
+  done
+  install -o root -g root -D -m 755 uninstall.sh ${BIN_PATH}/uninstall.sh
+  
+  for p in $(ls ./bin/ltepi_*); do
+    f=$(basename ${p})
+    ln -sn ${BIN_PATH}/${f} /usr/bin/${f}
+  done
+
+  info "Installing config files to /opt/inn-farm/ltepi/bin..."
   echo "${VERSION}" > ./bin/version.txt
-  install -o root -g root -D -m 644 bin/version.txt /opt/inn-farm/ltepi/bin/version.txt
+  install -o root -g root -D -m 644 bin/version.txt ${BIN_PATH}/version.txt
+  install -o root -g root -D -m 644 apn.json ${BIN_PATH}/apn.json
 
   info "Configuring networks..."
-  mv /etc/network/interfaces /etc/network/interfaces.bak
-  install -o root -g root -D -m 644 etc/network/interfaces /etc/network/interfaces
-  mv /etc/rc.local /etc/rc.local.bak
-  install -o root -g root -D -m 755 etc/rc.local /etc/rc.local
-  
-  cp -f uninstall.sh /opt/inn-farm/ltepi/bin/
+  install -o root -g root -D -m 644 etc/network/interfaces.d/ltepi.conf /etc/network/interfaces.d/ltepi.conf
 }
 
 function install_ltepi {
