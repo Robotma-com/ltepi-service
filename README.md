@@ -91,7 +91,7 @@ Raspberry Pi上にNode-REDベースのフローエディターである[CANDY RE
 ```
 $ sudo systemctl stop ltepi
 ```
-続いて、Node.jsを入れ替えます。Raspbian 4.1以降ではNode-REDがプリインストールされていますのでNode.jsもすでに入っています。しかし、CANDY REDインストール時に追加するアドオンを用意するときに、プリインストールされたNode.jsでは解決できないエラーが発生してしまいます。これを避さけるため、Node.jsを入れ替えるようにします。
+続いて、Node.jsを入れ替えます。Raspbian 4.1以降ではNode-REDがプリインストールされていますのでNode.jsもすでに入っています。しかし、CANDY REDインストール時に追加するアドオンを用意するときに、プリインストールされたNode.jsでは解決できないエラーが発生してしまいます。これを避けるため、Node.jsを入れ替えるようにします。
 
 Raspberry Pi Model B+をお使いの場合は、以下のコマンドを実行します。
 ```
@@ -106,8 +106,8 @@ Raspberry Pi2をお使いの場合は、以下のコマンドを実行します�
 ```
 $ sudo apt-get update
 $ sudo apt-get upgrade
-curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
-sudo apt-get install -y build-essential python-dev python-rpi.gpio nodejs
+$ curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+$ sudo apt-get install -y build-essential python-dev python-rpi.gpio nodejs
 ```
 
 続いてBluetoothのドライバーをインストールします。これには40分ほどかかります。
