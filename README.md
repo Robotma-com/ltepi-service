@@ -30,13 +30,13 @@ Raspbian 4.1以降
 Raspberry Piをインターネットに接続できる状態にして、以下のコマンドを入力してください。[ltepi](https://github.com/Robotma-com/ltepi)も同時にインストールされます。
 
 ```
-$ VERSION=2.0.0
-$ curl https://raw.githubusercontent.com/Robotma-com/ltepi-service/${VERSION}/install.sh | sudo bash
+$ curl https://raw.githubusercontent.com/Robotma-com/ltepi-service/master/install.sh | sudo bash
 ```
 
-最新版を利用する場合は、以下のようにバージョンの指定を外すことができます。
+特定のバージョンを利用する場合は、以下のようにバージョンを指定することができます。
 ```
-$ curl https://raw.githubusercontent.com/Robotma-com/ltepi-service/master/install.sh | sudo bash
+$ VERSION=2.0.0
+$ curl https://raw.githubusercontent.com/Robotma-com/ltepi-service/${VERSION}/install.sh | sudo bash
 ```
 
 ## インストール実行例
