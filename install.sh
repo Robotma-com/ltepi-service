@@ -39,7 +39,7 @@ function setup {
 
 function assert_root {
   if [[ $EUID -ne 0 ]]; then
-     echo "This script must be run as root" 
+     echo "This script must be run as root"
      exit 1
   fi
 }
@@ -66,7 +66,7 @@ function install_cli {
     install -o root -g root -D -m 755 ${SRC_DIR}/bin/${f} ${BIN_PATH}/${f}
   done
   install -o root -g root -D -m 755 ${SRC_DIR}/uninstall.sh ${BIN_PATH}/uninstall.sh
-  
+
   for p in $(ls ${SRC_DIR}/bin/ltepi_*); do
     f=$(basename ${p})
     ln -sn ${BIN_PATH}/${f} /usr/bin/${f}
@@ -99,13 +99,13 @@ function install_service {
     return
   fi
   download
-  
+
   LIB_SYSTEMD="$(dirname $(dirname $(which systemctl)))"
   if [ "${LIB_SYSTEMD}" == "/" ]; then
     LIB_SYSTEMD=""
   fi
   LIB_SYSTEMD="${LIB_SYSTEMD}/lib/systemd"
-  
+
   mkdir -p ${SERVICE_HOME}
   install -o root -g root -D -m 644 ${SRC_DIR}/systemd/environment ${SERVICE_HOME}
   FILES=`ls ${SRC_DIR}/systemd/*.sh`
