@@ -4,15 +4,17 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=2.0.0
+VERSION=2.1.0
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
 
+NODEJS_VERSIONS="v0.12 v4.3"
+
 SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}
 SRC_DIR="${SRC_DIR:-/tmp/ltepi-service-${VERSION}}"
 BIN_PATH=${SERVICE_HOME}/bin
-
+CANDY_RED=${CANDY_RED:-1}
 KERNEL="${KERNEL:-$(uname -r)}"
 CONTAINER_MODE=0
 if [ "${KERNEL}" != "$(uname -r)" ]; then
@@ -39,7 +41,7 @@ function setup {
 
 function assert_root {
   if [[ $EUID -ne 0 ]]; then
-     echo "This script must be run as root" 
+     echo "This script must be run as root"
      exit 1
   fi
 }
@@ -66,7 +68,7 @@ function install_cli {
     install -o root -g root -D -m 755 ${SRC_DIR}/bin/${f} ${BIN_PATH}/${f}
   done
   install -o root -g root -D -m 755 ${SRC_DIR}/uninstall.sh ${BIN_PATH}/uninstall.sh
-  
+
   for p in $(ls ${SRC_DIR}/bin/ltepi_*); do
     f=$(basename ${p})
     ln -sn ${BIN_PATH}/${f} /usr/bin/${f}
@@ -92,6 +94,47 @@ function install_ltepi {
   REBOOT=1
 }
 
+function install_candyred {
+  if [ "${CANDY_RED}" == "0" ]; then
+    return
+  fi
+  info "Installing CANDY RED..."
+  NODEJS_VER=`node -v`
+  if [ "$?" == "0" ]; then
+    for v in ${NODEJS_VERSIONS}
+    do
+      echo ${NODEJS_VER} | grep -oE "${v/./\\.}\..*"
+      if [ "$?" == "0" ]; then
+        unset NODEJS_VER
+      fi
+    done
+  else
+    NODEJS_VER="N/A"
+  fi
+  apt-get update -y
+  if [ -n "${NODEJS_VER}" ]; then
+    MODEL_NAME=`cat /proc/cpuinfo | grep "model name"`
+    if [ "$?" != "0" ]; then
+      alert "Unsupported environment"
+      exit 1
+    fi
+    apt-get upgrade -y
+    apt-get remove -y nodered nodejs nodejs-legacy npm
+    echo ${MODEL_NAME} | grep -o "ARMv6"
+    if [ "$?" == "0" ]; then
+      cd /tmp
+      wget http://node-arm.herokuapp.com/node_archive_armhf.deb
+      dpkg -i node_archive_armhf.deb
+    else
+      curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+      apt-get install -y nodejs
+    fi
+  fi
+  apt-get install -y python-dev python-rpi.gpio bluez
+  NODE_OPTS=--max-old-space-size=128 npm install -g --unsafe-perm candy-red
+  REBOOT=1
+}
+
 function install_service {
   RET=`systemctl | grep ${SERVICE_NAME}.service`
   RET=$?
@@ -99,13 +142,13 @@ function install_service {
     return
   fi
   download
-  
+
   LIB_SYSTEMD="$(dirname $(dirname $(which systemctl)))"
   if [ "${LIB_SYSTEMD}" == "/" ]; then
     LIB_SYSTEMD=""
   fi
   LIB_SYSTEMD="${LIB_SYSTEMD}/lib/systemd"
-  
+
   mkdir -p ${SERVICE_HOME}
   install -o root -g root -D -m 644 ${SRC_DIR}/systemd/environment ${SERVICE_HOME}
   FILES=`ls ${SRC_DIR}/systemd/*.sh`
@@ -127,7 +170,7 @@ function install_service {
 function teardown {
   [ "${DEBUG}" ] || rm -fr ${SRC_DIR}
   if [ "${CONTAINER_MODE}" == "0" ] && [ "${REBOOT}" == "1" ]; then
-    alert "*** Please reboot the system! (enter 'sudo reboot') ***"
+    alert "*** Please shutdown the system then restart! (enter 'sudo shutdown -h now' first) ***"
   fi
 }
 
@@ -148,5 +191,6 @@ abort_if_installed
 setup
 install_cli
 install_ltepi
+install_candyred
 install_service
 teardown
