@@ -100,13 +100,17 @@ function install_candyred {
   fi
   info "Installing CANDY RED..."
   NODEJS_VER=`node -v`
-  for v in ${NODEJS_VERSIONS}
-  do
-    echo ${NODEJS_VER} | grep -oE "${V/./\\.}\..*"
-    if [ "$?" == "0" ]; then
-      unset NODEJS_VER
-    fi
-  done
+  if [ "$?" == "0" ]; then
+    for v in ${NODEJS_VERSIONS}
+    do
+      echo ${NODEJS_VER} | grep -oE "${v/./\\.}\..*"
+      if [ "$?" == "0" ]; then
+        unset NODEJS_VER
+      fi
+    done
+  else
+    NODEJS_VER="N/A"
+  fi
   if [ -n "${NODEJS_VER}" ]; then
     apt-get update -y
     apt-get upgrade -y
