@@ -111,15 +111,15 @@ function install_candyred {
   else
     NODEJS_VER="N/A"
   fi
+  apt-get update -y
   if [ -n "${NODEJS_VER}" ]; then
-    apt-get update -y
-    apt-get upgrade -y
-    apt-get remove -y nodered nodejs nodejs-legacy npm
     MODEL_NAME=`cat /proc/cpuinfo | grep "model name"`
     if [ "$?" != "0" ]; then
       alert "Unsupported environment"
       exit 1
     fi
+    apt-get upgrade -y
+    apt-get remove -y nodered nodejs nodejs-legacy npm
     echo ${MODEL_NAME} | grep -o "ARMv6"
     if [ "$?" == "0" ]; then
       cd /tmp
