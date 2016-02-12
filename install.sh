@@ -131,6 +131,7 @@ function install_candyred {
     fi
   fi
   apt-get install -y python-dev python-rpi.gpio bluez
+  cd ~
   NODE_OPTS=--max-old-space-size=128 npm install -g --unsafe-perm candy-red
   REBOOT=1
 }
