@@ -9,10 +9,12 @@ VERSION=2.1.0
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
 
+NODEJS_VERSIONS="v0.12 v4.3"
+
 SERVICE_HOME=${VENDOR_HOME}/${SERVICE_NAME}
 SRC_DIR="${SRC_DIR:-/tmp/ltepi-service-${VERSION}}"
 BIN_PATH=${SERVICE_HOME}/bin
-
+CANDY_RED=${CANDY_RED:-1}
 KERNEL="${KERNEL:-$(uname -r)}"
 CONTAINER_MODE=0
 if [ "${KERNEL}" != "$(uname -r)" ]; then
@@ -92,6 +94,43 @@ function install_ltepi {
   REBOOT=1
 }
 
+function install_candyred {
+  if [ "${CANDY_RED}" == "0" ]; then
+    return
+  fi
+  info "Installing CANDY RED..."
+  NODEJS_VER=`node -v`
+  for v in ${NODEJS_VERSIONS}
+  do
+    echo ${NODEJS_VER} | grep -oE "${V/./\\.}\..*"
+    if [ "$?" == "0" ]; then
+      unset NODEJS_VER
+    fi
+  done
+  if [ -n "${NODEJS_VER}" ]; then
+    apt-get update -y
+    apt-get upgrade -y
+    apt-get remove -y nodered nodejs nodejs-legacy npm
+    MODEL_NAME=`cat /proc/cpuinfo | grep "model name"`
+    if [ "$?" != "0" ]; then
+      alert "Unsupported environment"
+      exit 1
+    fi
+    echo ${MODEL_NAME} | grep -o "ARMv6"
+    if [ "$?" == "0" ]; then
+      cd /tmp
+      wget http://node-arm.herokuapp.com/node_archive_armhf.deb
+      dpkg -i node_archive_armhf.deb
+    else
+      curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+      apt-get install -y nodejs
+    fi
+  fi
+  apt-get install -y python-dev python-rpi.gpio bluez
+  NODE_OPTS=--max-old-space-size=128 npm install -g --unsafe-perm candy-red
+  REBOOT=1
+}
+
 function install_service {
   RET=`systemctl | grep ${SERVICE_NAME}.service`
   RET=$?
@@ -148,5 +187,6 @@ abort_if_installed
 setup
 install_cli
 install_ltepi
+install_candyred
 install_service
 teardown
