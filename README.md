@@ -98,11 +98,12 @@ $ VERSION=2.0.0 && \
 
 LTEモジュールが動作するためにはいくつか条件が必要となります。Raspberry Piが動作するだけでは十分ではありませんのでうまくいかないときは、以下の項目を確認して試してみてください。
 
+1. ltepi-serviceのインストールは完了していますか？ もしかすると、ltepi-serviceをインストールしていない別のSDカードを使用しているかもしれません。ltepi-serviceがインストールされていない場合、LTEモジュールは自動的に起動することはありません。`systemctl status ltepi`を実施し、`(/lib/systemd/system/lte.service; enabled)`と表示されていることを確認しましょう。
 1. [LTEPi](http://lte4iot.com/products/ltepi/)とRaspberry Piは、付属のUSBケーブルで正しく接続されていますか？ Raspberry Pi本体の電源用USBアダプターとと[LTEPi](http://lte4iot.com/products/ltepi/)のUSB通信用アダプターは近い位置にありますから、間違えないようにしましょう。
-1. au/KDDIの電波の圏内ですか？[こちら](http://www.au.kddi.com/mobile/area/?bid=we-we-sn-0004)のauのサイトから4G LTEのサービスエリアを確認し、サービスエリア圏内であることを確認しましょう。また、au/KDDIの4G LTE対応の携帯電話をお持ちであれば、4G LTEの電波が圏内であることを確認してみましょう。
-1. [LTEPi](http://lte4iot.com/products/ltepi/)のアンテナは正しく接続されていますか？LTEモジュールは、電源が十分供給されていてもアンテナが接続されていないと起動することができません。LTEモジュールに接続するアンテナケーブルとアンテナ本体が、外れることなく取り付けられていることを確認しましょう。
+1. au/KDDIの電波の圏内ですか？ [こちら](http://www.au.kddi.com/mobile/area/?bid=we-we-sn-0004)のauのサイトから4G LTEのサービスエリアを確認し、サービスエリア圏内であることを確認しましょう。また、au/KDDIの4G LTE対応の携帯電話をお持ちであれば、4G LTEの電波が圏内であることを確認してみましょう。
+1. [LTEPi](http://lte4iot.com/products/ltepi/)のアンテナは正しく接続されていますか？ LTEモジュールは、電源が十分供給されていてもアンテナが接続されていないと起動することができません。LTEモジュールに接続するアンテナケーブルとアンテナ本体が、外れることなく取り付けられていることを確認しましょう。
 1. Raspberry Piに供給する機器側からは十分な電力が供給できていますか？ [LTEPi](http://lte4iot.com/products/ltepi/)が動作するためには、Raspberry Piに加えてより多くの電力が必要になります。もしかするとUSBバスパワーを供給する機器側のUSBポートは、電力が十分ではないかもしれません。もしうまく動作しない場合は、別のUSBポートにつなぎ変えたり、別のUSB電源用意したりしてお試しください。
-1. Raspberry Piに電源供給するために使用しているUSBケーブルは正しく動作していますか？USBケーブルの製造元や使用状態によっては、[LTEPi](http://lte4iot.com/products/ltepi/)が動作するために必要な電力をRaspberry Piに伝えられていない可能性もあります。他のUSBケーブルもお試しください。
+1. Raspberry Piに電源供給するために使用しているUSBケーブルは正しく動作していますか？ USBケーブルの商品の種類や使用状態によっては、[LTEPi](http://lte4iot.com/products/ltepi/)が動作するために必要な電力をRaspberry Piに伝えられていない可能性もあります。他のUSBケーブルもお試しください。
 
 ## CANDY REDへのブラウザー接続
 オプション指定をせずインストールを行うと、[CANDY RED](https://github.com/dbaba/candy-red)が有効になっていますので、ブラウザーから接続してみましょう。Raspberry Piがつながっている有線または無線LANと同じネットワークにあるコンピューターのブラウザーで以下のアドレスを入力してページを表示させてみてください。
