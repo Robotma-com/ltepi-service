@@ -146,7 +146,7 @@ $ sudo /opt/inn-farm/ltepi/bin/uninstall.sh
 ```
 このコマンドでは、[CANDY RED](https://github.com/dbaba/candy-red)は削除されません。[CANDY RED](https://github.com/dbaba/candy-red)を削除する場合は、後述の「[CANDY REDのアンインストール](#CANDY REDのアンインストール)」をご覧ください。
 
-## アンインストール実行例
+実行すると以下のように表示されます。
 ```bash
 $ cd ~
 $ sudo /opt/inn-farm/ltepi/bin/uninstall.sh
@@ -162,11 +162,11 @@ $ sudo npm uninstall -g --unsafe-perm candy-red
 
 # 設定
 ## CANDY EGG連携
-Raspberry Pi上にNode-REDベースのフローエディターである[CANDY RED](https://github.com/dbaba/candy-red)をインストールすることができます。通常のNode-REDとしての機能のほか、CANDY EGGクラウドサービスと連携して手軽にクラウドとのやりとりを行うアプリケーションを作成することができます。
+ltepiサービスをインストールすると、Raspberry Pi上にNode-REDベースのフローエディターである[CANDY RED](https://github.com/dbaba/candy-red)もインストールされます。通常のNode-REDとしての機能のほか、CANDY EGGクラウドサービスと連携して手軽にクラウドとのやりとりを行うアプリケーションを作成することができます。
 
-### CANDY REDアプリケーションのインストール
 初回インストール時に[CANDY RED](https://github.com/dbaba/candy-red)をインストールしていない場合(`CANDY_RED=0`を指定してインストールした場合)は、以下の手順で追加することができます。
 
+### CANDY REDアプリケーションのインストール
 まず最初に、ltepiサービスを停止し、LANケーブルまたはWiFiでインターネットに接続します。これは、ダウンロードにかかる通信をLTEではなく有線・無線LANにて行うようにするためです。
 ```bash
 $ sudo systemctl stop ltepi
