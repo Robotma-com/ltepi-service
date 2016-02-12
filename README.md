@@ -48,7 +48,32 @@ Raspbian 4.1以降
 # インストール方法
 最初にLANケーブルの一方をRaspberry Piに、もう一方をブロードバンドルーターに接続してインターネットに通信できる状態にしてください。
 すでにRaspberry PiにてWi-Fiの設定を行い利用できている場合は、Wi-Fi経由で作業を行うことも可能です。
-その後、以下のコマンドを入力してください。
+
+試しに以下のようなcURLコマンドを実行してみましょう。
+
+```bash
+$ curl -i -L -X HEAD http://www.robotma.com/
+```
+
+下記のように`HTTP/1.1 200 OK`と出ていれば問題ありません。
+```bash
+HTTP/1.1 200 OK
+Date: Fri, 30 Oct 2015 04:43:43 GMT
+Server: Apache
+Last-Modified: Mon, 14 Sep 2015 07:08:39 GMT
+ETag: "41ed5a-1947-bc184bc0"
+Accept-Ranges: bytes
+Content-Length: 6471
+Content-Type: text/html
+
+curl: (18) transfer closed with 6471 bytes remaining to read
+root@binita:~#
+```
+
+それでは、GitHub上にあるスクリプトをダウンロードしてインストールします。
+
+以下のコマンドを実行します（`git.io`もGitHubの管理するドメインの1つです）。
+
 ```bash
 $ curl -L https://git.io/vgKU2 | sudo bash
 ```
@@ -65,26 +90,27 @@ $ VERSION=2.0.0 && \
   sudo bash
 ```
 
-## インストール実行例
+実行すると以下のように表示されます。
 
     [INFO] Installing command lines to /opt/inn-farm/ltepi/bin...
     [INFO] Installing config files to /opt/inn-farm/ltepi/bin...
     [INFO] Installing LTEPi Python Library...
-    running install
-    running build
-    running build_py
-    creating build/lib.linux-armv6l-2.7
-    copying src/ltepi.py -> build/lib.linux-armv6l-2.7
-    running install_lib
-    running install_egg_info
-    Removing /usr/local/lib/python2.7/dist-packages/ltepi-0.9.5.egg-info
-    Writing /usr/local/lib/python2.7/dist-packages/ltepi-0.9.5.egg-info
-    writing list of installed files to '/opt/inn-farm//ltepi//bin/ltepi-files.txt'
+              :
+              :
+    [INFO] Installing CANDY RED...
+              :
+              :
     [INFO] ltepi service has been installed
-    [ALERT] *** Please reboot the system! (enter 'sudo reboot') ***
+    [ALERT] *** Please shutdown the system then restart! (enter 'sudo shutdown -h now' first) ***
 
 ## インストール後の注意
-インストールした後は、一度電源を切りましょう。リブートではなく、`sudo shutdown -h`を実行して、シャットダウンを行い、一旦USBケーブルを外してください。これは、LTEモジュールの電源も切断させるために行うものです。
+インストールした後は、以下のコマンドを実行してシャットダウンしましょう。
+
+```bash
+$ sudo shutdown -h
+```
+
+上記コマンドを実行後に一旦USBケーブルを外してください。これは、LTEモジュールの電源も切断させるために行うものです。
 
 そして、付属のアンテナを2本ともモジュールに接続します。続いて、au/KDDIのSIMカードを差し込みます。
 最後に、付属のUSBケーブルで[LTEPi](http://lte4iot.com/products/ltepi/)とRaspberry Piを接続します。
