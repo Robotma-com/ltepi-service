@@ -144,7 +144,7 @@ http://raspberry.local:8100
 $ cd ~
 $ sudo /opt/inn-farm/ltepi/bin/uninstall.sh
 ```
-このコマンドでは、[CANDY RED](https://github.com/dbaba/candy-red)は削除されません。[CANDY RED](https://github.com/dbaba/candy-red)を削除する場合は、後述の「[CANDY REDのアンインストール](#CANDY REDのアンインストール)」をご覧ください。
+このコマンドでは、[CANDY RED](https://github.com/dbaba/candy-red)は削除されません。[CANDY RED](https://github.com/dbaba/candy-red)を削除する場合は、後述の「[CANDY REDのアンインストール](#candy-redのアンインストール)」をご覧ください。
 
 実行すると以下のように表示されます。
 ```bash
