@@ -31,9 +31,12 @@ function uninstall_cli {
   for p in $(ls /usr/bin/ltepi*); do
     rm -f ${p}
   done
+}
 
+function uninstall_ltepi {
   cd ${BIN_PATH}
   ./ltepi-uninstall.sh ${BIN_PATH}
+  cd ~
   rm -fr ${BIN_PATH}
   REBOOT=1
 }
@@ -68,4 +71,5 @@ function teardown {
 assert_root
 uninstall_service
 uninstall_cli
+uninstall_ltepi
 teardown
