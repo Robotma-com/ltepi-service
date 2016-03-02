@@ -303,7 +303,7 @@ $ ./install.sh pack
 
 ## 開発用インストール動作確認
 ```bash
-$ ./install pack
+$ ./install.sh pack
 (scp to RPi then ssh)
 $ VERSION=2.1.0 && mkdir tmp && cd tmp && tar zxf ~/ltepi-service-${VERSION}.tgz
 $ time sudo SRC_DIR=$(pwd) DEBUG=1 ./install.sh
