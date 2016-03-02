@@ -13,6 +13,7 @@ LTEPi Board Service
 - LTE接続の切断コマンド (`ltepi_disconnect`)
 - APN変更コマンド (`ltepi_set_apn`)
 - ICCID取得コマンド (`ltepi_get_iccid`)
+- GPS位置取得コマンド (`ltepi_get_gps`)
 
 また、以下のモジュールも同時にインストールされます。**常にインストールされます。**
 - [ltepi](https://github.com/Robotma-com/ltepi) ... Pythonライブラリー
@@ -265,6 +266,31 @@ ltepiサービスや[CANDY RED](https://github.com/dbaba/candy-red)を動作さ�
 
 また、上記のほか、Web検索にて種々の方法が紹介されていますので、目的や用途に合った方法をお試しください。
 なお、これらの紹介はあくまで情報提供であり、私たちの保証する方法ではありませんのでご注意ください。
+
+# コマンド説明
+
+## GPS取得コマンド
+
+以下の書式でコマンドを実行します。タイムアウト秒を省略すると15秒として扱われます。15秒より小さい値を指定することはできません。
+
+    ltepi_get_gps [タイムアウト秒]
+
+アンテナが繋がっていれば15秒程度で取得可能ですが、最初は20~30秒を指定しないとエラーとなる可能性があります。エラーとなっても再度コマンドを実行し、成功するまで繰り返しても構いません。ただし、`Start LTEPi Service prior to running this command!`と出ている場合は、モデム自体が起動していないので、ltepi-service自体が正しく起動できているか確認しましょう。
+
+結果のJSONには、`status`と`result`のプロパティが入ります。エラーの場合は、`message`が`result`の代わりに入ります。
+
+`result`プロパティの内容は以下の通りです。
+
+ * status ... 測位結果(string) OK:成功  FAIL:測位失敗
+ * count ... 測位結果番号(int)
+ * lat ... 緯度(float) 北緯(+)　南緯(-)
+ * lon ... 経度(float)　東経(+)　西経(-)
+ * alt ... 海抜高度(int)　単位：メートル
+ * time ... 測位時刻(日本標準時間) (string) フォーマット ISO8601 YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+09:00)
+ * smaj ... 長軸誤差(int)　単位：メートル
+ * smin ... 短軸誤差(int)　単位：メートル
+ * vert ... 高度誤差(int)　単位：メートル
+ * majaa ... 長軸・短軸傾き(int)　単位：度(degree)
 
 # 管理者向け
 ## モジュールリリース時の注意
