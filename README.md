@@ -50,6 +50,8 @@ Raspbian 4.1以降
 最初にLANケーブルの一方をRaspberry Piに、もう一方をブロードバンドルーターに接続してインターネットに通信できる状態にしてください。
 すでにRaspberry PiにてWi-Fiの設定を行い利用できている場合は、Wi-Fi経由で作業を行うことも可能です。
 
+バージョンアップを行う場合は、先に[アンインストール方法](#アンインストール方法)を参照してアンインストールを行いましょう。
+
 試しに以下のようなcURLコマンドを実行してみましょう。
 
 ```bash
@@ -305,11 +307,14 @@ $ ./install.sh pack
 ```bash
 $ ./install.sh pack
 (scp to RPi then ssh)
-$ VERSION=2.1.0 && mkdir tmp && cd tmp && tar zxf ~/ltepi-service-${VERSION}.tgz
+$ VERSION=2.2.0 && mkdir tmp && cd tmp && tar zxf ~/ltepi-service-${VERSION}.tgz
 $ time sudo SRC_DIR=$(pwd) DEBUG=1 ./install.sh
 ```
 
 # 履歴
+* 2.2.0
+  - GPS位置取得コマンド`ltepi_get_gps`を追加
+
 * 2.1.0
   - CANDY REDをデフォルトで追加インストールする機能を追加（`CANDY_RED=0`で抑止可能）
   - CANDY REDのバージョンアップに伴い追加インストール・アンインストール手順を変更
