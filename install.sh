@@ -4,7 +4,7 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=2.1.0
+VERSION=2.2.0
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
 LTEPI_VERSION=0.9.5
