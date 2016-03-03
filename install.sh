@@ -7,7 +7,7 @@ GITHUB_ID=Robotma-com/ltepi-service
 VERSION=2.2.0
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
-LTEPI_VERSION=0.9.5
+LTEPI_VERSION=0.10.0
 
 NODEJS_VERSIONS="v0.12 v4.3"
 
