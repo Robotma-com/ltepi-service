@@ -46,10 +46,9 @@ function assert_root {
   fi
 }
 
-function abort_if_installed {
+function uninstall_if_installed {
   if [ -f "${SERVICE_HOME}/bin/version.txt" ]; then
-    err "Already installed"
-    exit 1
+    ${SERVICE_HOME}/bin/uninstall.sh > /dev/null
   fi
 }
 
@@ -188,7 +187,7 @@ fi
 
 # main
 assert_root
-abort_if_installed
+uninstall_if_installed
 setup
 install_cli
 install_ltepi
