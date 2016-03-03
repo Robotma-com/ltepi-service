@@ -42,7 +42,7 @@ function uninstall_ltepi {
 }
 
 function uninstall_service {
-  RET=`systemctl | grep ${SERVICE_NAME}.service`
+  RET=`systemctl | grep ${SERVICE_NAME}.service | grep running`
   RET=$?
   if [ "${RET}" == "0" ]; then
     systemctl stop ${SERVICE_NAME}

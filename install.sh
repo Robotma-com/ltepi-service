@@ -4,10 +4,10 @@ VENDOR_HOME=/opt/inn-farm
 
 SERVICE_NAME=ltepi
 GITHUB_ID=Robotma-com/ltepi-service
-VERSION=2.2.0
+VERSION=2.3.0
 
 LTEPI_GITHUB_ID=Robotma-com/ltepi
-LTEPI_VERSION=0.9.5
+LTEPI_VERSION=0.10.0
 
 NODEJS_VERSIONS="v0.12 v4.3"
 
@@ -46,10 +46,9 @@ function assert_root {
   fi
 }
 
-function abort_if_installed {
+function uninstall_if_installed {
   if [ -f "${SERVICE_HOME}/bin/version.txt" ]; then
-    err "Already installed"
-    exit 1
+    ${SERVICE_HOME}/bin/uninstall.sh > /dev/null
   fi
 }
 
@@ -137,7 +136,7 @@ function install_candyred {
 }
 
 function install_service {
-  RET=`systemctl | grep ${SERVICE_NAME}.service`
+  RET=`systemctl | grep ${SERVICE_NAME}.service | grep -v not-found`
   RET=$?
   if [ "${RET}" == "0" ]; then
     return
@@ -176,7 +175,7 @@ function teardown {
 }
 
 function package {
-  rm -f $(basename ${GITHUB_ID})-${VERSION}.tgz
+  rm -f ltepi-*.tgz
   # http://unix.stackexchange.com/a/9865
   COPYFILE_DISABLE=1 tar --exclude="./.*" -zcf $(basename ${GITHUB_ID})-${VERSION}.tgz *
 }
@@ -188,7 +187,7 @@ fi
 
 # main
 assert_root
-abort_if_installed
+uninstall_if_installed
 setup
 install_cli
 install_ltepi
