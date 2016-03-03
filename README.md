@@ -130,6 +130,7 @@ $ sudo shutdown -h
 LTEモジュールが動作するためにはいくつか条件が必要となります。Raspberry Piが動作するだけでは十分ではありませんのでうまくいかないときは、以下の項目を確認して試してみてください。
 
 1. ltepi-serviceのインストールは完了していますか？ もしかすると、ltepi-serviceをインストールしていない別のSDカードを使用しているかもしれません。ltepi-serviceがインストールされていない場合、LTEモジュールは自動的に起動することはありません。`systemctl status ltepi`を実施し、`(/lib/systemd/system/lte.service; enabled)`と表示されていることを確認しましょう。
+1. ltepi-serviceのインストールに失敗していませんか？ `systemctl status ltepi`を確認した時、activeとでたにもかかわらず、再度`systemctl status ltepi`を実施すると止まっていたり、モデムが起動していなかったりする場合があります。その場合はインストールが正しくできていない可能性がありますので、再度インストールのコマンドを実施してみましょう。
 1. [LTEPi](http://lte4iot.com/products/ltepi/)とRaspberry Piは、付属のUSBケーブルで正しく接続されていますか？ Raspberry Pi本体の電源用USBアダプターとと[LTEPi](http://lte4iot.com/products/ltepi/)のUSB通信用アダプターは近い位置にありますから、間違えないようにしましょう。
 1. au/KDDIの電波の圏内ですか？ [こちら](http://www.au.kddi.com/mobile/area/?bid=we-we-sn-0004)のauのサイトから4G LTEのサービスエリアを確認し、サービスエリア圏内であることを確認しましょう。また、au/KDDIの4G LTE対応の携帯電話をお持ちであれば、4G LTEの電波が圏内であることを確認してみましょう。
 1. [LTEPi](http://lte4iot.com/products/ltepi/)のアンテナは正しく接続されていますか？ LTEモジュールは、電源が十分供給されていてもアンテナが接続されていないと起動することができません。LTEモジュールに接続するアンテナケーブルとアンテナ本体が、外れることなく取り付けられていることを確認しましょう。
