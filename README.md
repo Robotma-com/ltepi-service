@@ -14,6 +14,7 @@ LTEPi Board Service
 - APN変更コマンド (`ltepi_set_apn`)
 - ICCID取得コマンド (`ltepi_get_iccid`)
 - GPS位置取得コマンド (`ltepi_get_gps`)
+- LTEモジュールをSIM優先モードに切り替えるコマンド(`ltepi_select_sim`) ... 手動で実行することはありません
 
 また、以下のモジュールも同時にインストールされます。**常にインストールされます。**
 - [ltepi](https://github.com/Robotma-com/ltepi) ... Pythonライブラリー
