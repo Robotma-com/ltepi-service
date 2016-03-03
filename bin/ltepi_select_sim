@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+
+import sys
+import json
+import ltepi
+
+if ltepi.getPsHold() != '1':
+    print(json.dumps({
+        'status': 'ERROR',
+        'message': 'Start LTEPi Service prior to running this command!'
+    }))
+    sys.exit(1)
+
+is_set = True
+if len(sys.argv) > 1:
+    is_set = True if sys.argv[1] == 1 else False
+
+if is_set:
+    expected = '2,2'
+else:
+    expected = '1,1'
+
+result = ltepi.getSimSelected()
+if result != expected:
+    if is_set:
+        result = ltepi.setSelectsim()
+    else:
+        result = ltepi.unsetSelectsim()
+else:
+    print(json.dumps({
+        'status': 'OK'
+    }))
+    sys.exit(0)
+
+if result == 'OK':
+    result = ltepi.reqWrite()
+    if result == 'OK':
+        print(json.dumps({
+            'status': 'OK'
+        }))
+        sys.exit(0)
+    else:
+        result = 'Writing Error(%s)' % result
+else:
+    result = 'Modem Error(%s)' % result
+
+print(json.dumps({
+    'status': 'ERROR',
+    'message': result
+}))
+sys.exit(1)
