@@ -137,7 +137,7 @@ function install_candyred {
 }
 
 function install_service {
-  RET=`systemctl | grep ${SERVICE_NAME}.service`
+  RET=`systemctl | grep ${SERVICE_NAME}.service | grep -v not-found`
   RET=$?
   if [ "${RET}" == "0" ]; then
     return
