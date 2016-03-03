@@ -175,7 +175,7 @@ function teardown {
 }
 
 function package {
-  rm -f $(basename ${GITHUB_ID})-${VERSION}.tgz
+  rm -f ltepi-*.tgz
   # http://unix.stackexchange.com/a/9865
   COPYFILE_DISABLE=1 tar --exclude="./.*" -zcf $(basename ${GITHUB_ID})-${VERSION}.tgz *
 }
